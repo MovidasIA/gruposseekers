@@ -55,7 +55,7 @@ body, html {
   z-index: 2;
 }
 
-/* Outer Layout Container for Desktop (16:9 / 16:10 optimized) */
+/* Outer Layout Container for Desktop */
 #stage {
   position: absolute;
   inset: 0;
@@ -123,7 +123,6 @@ body, html {
   min-width: 0;
 }
 
-/* Dedicated House Emblem Image Display */
 .house-emblem-token {
   width: 105px;
   height: 98px;
@@ -181,7 +180,6 @@ body, html {
   white-space: nowrap;
 }
 
-/* Slots for student names inside the pod */
 .pod-roster {
   flex: 1;
   display: flex;
@@ -199,15 +197,16 @@ body, html {
 }
 
 .roster-slot {
-  height: 32px;
-  min-height: 32px;
-  border-radius: 7px;
+  min-height: 42px !important;
+  height: auto !important;
+  padding: 8px 14px !important;
+  font-size: 18px !important;
+  line-height: 1.3 !important;
+  border-radius: 9px !important;
   background: rgba(0, 0, 0, 0.38);
   border: 1px dashed rgba(223, 185, 103, 0.18);
   display: flex;
   align-items: center;
-  padding: 0 10px;
-  font-size: 12.5px;
   color: rgba(255, 255, 255, 0.3);
   font-weight: 500;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -218,10 +217,15 @@ body, html {
 }
 
 .roster-slot.filled {
+  font-size: 21px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  color: #fff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+  padding: 8px 14px !important;
+  min-height: 44px !important;
   background: rgba(24, 18, 12, 0.92);
   border: 1px solid rgba(223, 185, 103, 0.38);
-  color: #fff;
-  font-weight: 600;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   animation: slotPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -230,6 +234,17 @@ body, html {
 .pod-nexus .roster-slot.filled { border-left: 3px solid var(--c-nexus); }
 .pod-argos .roster-slot.filled { border-left: 3px solid var(--c-argos); }
 .pod-kairos .roster-slot.filled { border-left: 3px solid var(--c-kairos); }
+
+.roster-slot.filled > span:first-child {
+  font-size: 18px !important;
+  margin-right: 10px !important;
+  font-weight: 800 !important;
+}
+.roster-slot.filled > span:last-child {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+}
 
 @keyframes slotPop {
   0% { transform: scale(0.92); opacity: 0.4; }
@@ -248,7 +263,6 @@ body, html {
   pointer-events: none;
 }
 
-/* Grand Seal */
 .seal-container {
   position: relative;
   width: 220px;
@@ -257,6 +271,7 @@ body, html {
   align-items: center;
   justify-content: center;
   margin-bottom: 14px;
+  pointer-events: auto;
 }
 
 .runic-ring {
@@ -290,11 +305,70 @@ body, html {
     0 0 60px rgba(223, 185, 103, 0.22),
     0 12px 35px rgba(0, 0, 0, 0.85);
   animation: pulseSeal 6s ease-in-out infinite alternate;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
 }
 
 @keyframes pulseSeal {
   0% { transform: scale(0.98); filter: drop-shadow(0 0 18px rgba(223, 185, 103, 0.35)); }
   100% { transform: scale(1.02); filter: drop-shadow(0 0 35px rgba(223, 185, 103, 0.7)); }
+}
+
+.seal-container.ceremony-complete {
+  cursor: pointer;
+}
+
+.seal-container.ceremony-complete .seal-medallion {
+  animation: sealMysticPulse 1.8s ease-in-out infinite alternate !important;
+  box-shadow: 0 0 45px rgba(223, 185, 103, 0.85), 0 0 90px rgba(223, 185, 103, 0.45), 0 0 120px rgba(255, 215, 0, 0.3) !important;
+  border-color: #ffe082 !important;
+}
+
+.seal-container.ceremony-complete:hover .seal-medallion {
+  transform: scale(1.08) !important;
+  filter: brightness(1.15) drop-shadow(0 0 40px rgba(223, 185, 103, 0.95)) !important;
+}
+
+@keyframes sealMysticPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(223, 185, 103, 0.6), 0 0 60px rgba(223, 185, 103, 0.3);
+  }
+  100% {
+    transform: scale(1.06);
+    box-shadow: 0 0 55px rgba(255, 224, 130, 0.95), 0 0 110px rgba(223, 185, 103, 0.75), 0 0 140px rgba(223, 111, 40, 0.4);
+  }
+}
+
+.seal-prompt-pill {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgba(223, 185, 103, 0.95), rgba(168, 126, 43, 0.95));
+  color: #0b0907;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-family: var(--serif);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(223, 185, 103, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 20;
+}
+
+.seal-container.ceremony-complete .seal-prompt-pill {
+  opacity: 1;
+  pointer-events: auto;
+  animation: promptFloat 2s ease-in-out infinite alternate;
+}
+
+@keyframes promptFloat {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-4px); }
 }
 
 .app-title {
@@ -344,7 +418,6 @@ body, html {
   z-index: 15;
 }
 
-/* Flying projectile state */
 .student-orb.flying {
   z-index: 30;
   box-shadow: 0 0 35px var(--orb-glow, rgba(223, 185, 103, 0.85));
@@ -487,12 +560,14 @@ body, html {
   background: #140f0a;
   border: 1.5px solid rgba(223, 185, 103, 0.45);
   border-radius: 20px;
-  width: min(1120px, 96vw);
-  max-height: 90vh;
+  width: min(1200px, 96vw);
+  max-width: 1200px;
+  max-height: 92vh;
   display: flex;
   flex-direction: column;
   box-shadow: 0 25px 65px rgba(0, 0, 0, 0.95), 0 0 40px rgba(223, 185, 103, 0.22);
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .modal-header {
@@ -518,17 +593,19 @@ body, html {
 }
 
 .modal-body {
-  padding: 22px;
+  padding: 16px 20px;
   overflow-y: auto;
+  overflow-x: hidden;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .group-config-card {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 12px;
-  padding: 14px;
+  padding: 10px 12px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -542,9 +619,9 @@ body, html {
 }
 
 .cfg-mini-emblem {
-  width: 72px;
-  height: 68px;
-  min-width: 72px;
+  width: 52px;
+  height: 50px;
+  min-width: 52px;
   object-fit: contain;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
 }
@@ -633,32 +710,366 @@ body, html {
 }
 #callout-announcer.active { opacity: 1; }
 
-.roster-slot {
-  min-height: 42px !important;
-  height: auto !important;
-  padding: 8px 14px !important;
-  font-size: 18px !important;
-  line-height: 1.3 !important;
-  border-radius: 9px !important;
+/* =========================================================
+   FULLSCREEN CEREMONIAL REVELATION VIEWER (CINEMATIC)
+========================================================= */
+#revelation-viewer {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, #151009 0%, #080604 70%, #020202 100%);
+  z-index: 120;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 48px;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
 }
-.roster-slot.filled {
-  font-size: 21px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.02em !important;
-  color: #fff !important;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
-  padding: 8px 14px !important;
-  min-height: 44px !important;
+
+#revelation-viewer.active {
+  display: flex;
+  opacity: 1;
 }
-.roster-slot.filled > span:first-child {
-  font-size: 18px !important;
-  margin-right: 10px !important;
-  font-weight: 800 !important;
+
+.rev-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 5;
 }
-.roster-slot.filled > span:last-child {
-  font-size: 20px !important;
-  font-weight: 700 !important;
-  color: #ffffff !important;
+
+.rev-step-tracker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--serif);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+}
+
+.rev-step-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(223, 185, 103, 0.25);
+  border: 1px solid rgba(223, 185, 103, 0.4);
+  transition: all 0.3s ease;
+}
+
+.rev-step-dot.active {
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+  transform: scale(1.3);
+}
+
+.rev-close-btn {
+  background: rgba(25, 18, 12, 0.7);
+  border: 1px solid rgba(223, 185, 103, 0.35);
+  color: var(--gold-light);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.25s ease;
+}
+
+.rev-close-btn:hover {
+  background: rgba(223, 185, 103, 0.25);
+  border-color: var(--gold);
+  transform: scale(1.08);
+}
+
+/* Stage container for cards */
+#rev-content-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+/* Single House Slide Layout */
+.house-slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  animation: houseFadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.house-slide.active {
+  display: flex;
+}
+
+@keyframes houseFadeIn {
+  0% { opacity: 0; transform: scale(0.96) translateY(12px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.house-slide-visual {
+  flex: 0 0 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.house-slide-visual-glow {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  filter: blur(55px);
+  opacity: 0.35;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.house-slide-emblem {
+  width: 360px;
+  height: 330px;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.95));
+  animation: subtleFloat 5s ease-in-out infinite alternate;
+}
+
+@keyframes subtleFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+.house-slide-title {
+  font-family: var(--serif);
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  margin-top: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.house-slide-motto {
+  font-family: var(--serif);
+  font-size: 13.5px;
+  letter-spacing: 0.16em;
+  color: var(--gold-light);
+  opacity: 0.85;
+  text-transform: uppercase;
+  margin-top: 6px;
+  max-width: 420px;
+  line-height: 1.4;
+  position: relative;
+  z-index: 2;
+}
+
+.house-slide-roster-box {
+  flex: 1;
+  max-width: 680px;
+  background: linear-gradient(145deg, rgba(22, 17, 12, 0.92) 0%, rgba(11, 9, 6, 0.96) 100%);
+  border: 1.5px solid rgba(223, 185, 103, 0.35);
+  border-radius: 24px;
+  padding: 30px 36px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.house-slide-roster-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 30px;
+  right: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--slide-accent, var(--gold)), transparent);
+}
+
+.house-roster-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(223, 185, 103, 0.2);
+}
+
+.house-roster-heading h4 {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+}
+
+.house-roster-heading span {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 14px;
+  background: rgba(223, 185, 103, 0.12);
+  border: 1px solid rgba(223, 185, 103, 0.35);
+  border-radius: 999px;
+  color: var(--gold-light);
+}
+
+.house-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 18px;
+}
+
+.house-member-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 12px;
+  border: 1px solid rgba(223, 185, 103, 0.2);
+  border-left: 4px solid var(--slide-accent, var(--gold));
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.house-member-card:hover {
+  transform: translateX(4px);
+  border-color: rgba(223, 185, 103, 0.5);
+}
+
+.house-member-num {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--slide-accent, var(--gold));
+  opacity: 0.9;
+}
+
+.house-member-name {
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+/* Final Chest Slide */
+.chest-slide {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  animation: houseFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.chest-slide.active {
+  display: flex;
+}
+
+.chest-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 22px;
+}
+
+.chest-img {
+  width: min(640px, 58vw);
+  max-height: 48vh;
+  object-fit: contain;
+  border-radius: 20px;
+  box-shadow: 
+    0 25px 65px rgba(0, 0, 0, 0.95),
+    0 0 60px rgba(223, 185, 103, 0.45),
+    0 0 100px rgba(223, 111, 40, 0.25);
+  border: 2px solid rgba(223, 185, 103, 0.5);
+  animation: chestGlowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes chestGlowPulse {
+  0% { transform: scale(0.99); filter: drop-shadow(0 0 20px rgba(223, 185, 103, 0.3)); }
+  100% { transform: scale(1.01); filter: drop-shadow(0 0 45px rgba(223, 185, 103, 0.7)); }
+}
+
+.chest-quote {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.2vw, 42px);
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--gold-light);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95), 0 0 30px rgba(223, 185, 103, 0.6);
+  margin-bottom: 8px;
+}
+
+.chest-sub {
+  font-family: var(--serif);
+  font-size: 15px;
+  letter-spacing: 0.28em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 26px;
+}
+
+.chest-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Navigation Arrow Bar */
+.rev-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  padding-top: 10px;
+}
+
+.rev-next-arrow-btn {
+  background: linear-gradient(135deg, #dfb967 0%, #a87e2b 100%);
+  color: #0b0907;
+  border: 1.5px solid #ffe082;
+  border-radius: 999px;
+  padding: 12px 26px;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(223, 185, 103, 0.5);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.rev-next-arrow-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.9), 0 0 35px rgba(223, 185, 103, 0.8);
+  background: linear-gradient(135deg, #fae09a 0%, #b88d35 100%);
+}
+
+.rev-next-arrow-btn svg {
+  transition: transform 0.25s ease;
+}
+
+.rev-next-arrow-btn:hover svg {
+  transform: translateX(4px);
 }
 </style>
 </head>
@@ -689,7 +1100,7 @@ body, html {
 
 <div id="completion-banner">
   <svg fill="none" height="24" stroke="var(--gold)" stroke-width="2.5" viewBox="0 0 24 24" width="24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-  <h2>¡Los 4 Grupos han completado su formación!</h2>
+  <h2>¡Los 4 Grupos han completado su formación! Toca el medallón central</h2>
 </div>
 
 <!-- Main Application Stage -->
@@ -698,7 +1109,7 @@ body, html {
   <section class="group-pod pod-atlas" data-group="0" id="pod-0">
     <div class="pod-header">
       <div class="pod-badge">
-        <img alt="Emblema ATLAS" class="house-emblem-token" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGzApCyIBNzGEuGOR8kmBB-2T1_DU49VSuDWfTyk4aX4awt4etI3bbLC2s8V8ftxOWQClCMWecDwN0804XQGOZL54jTpkQ2PymNzbsstEu-QfRv2X1JTDPPm4bgtVixHqOOFhDUQ20agb5CiZr-1I45wtGzjCDt-Odb_hiz2PHXi692-hjrHLzUs5mWm_MwtwH4j0_BIb0s_4oBGqQMwTa0GV7S7UURRm1shMZlqZvyBdYGYxW9w">
+        <img alt="Emblema ATLAS" class="house-emblem-token" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMPyh1AaDl48wu0P5AdgnM44-xvAQgTdgjeioSnsCMiOWjwJ76iwF5En7zo2xT_IzO1NyQpDlzvESmx8G37Kuax5EupSEucl7STmyjRnkeITQj8iqTLUe1Mtu3KQi-SyHTzxj6uHNPFLhw4d-CvbWwnY12zMBOIZSL6TQwP3kEUt1ULvjD-ThtFDSloARfaHtRa2fgBEo6BbNVHmOZMv99HOKQ-3yZoFfDRKa1XNO9w071nN5_9Q">
         <div class="pod-info">
           <h3>ATLAS</h3>
           <span class="pod-motto">QUIENES BUSCAN COMPRENDER EL MUNDO</span>
@@ -713,7 +1124,7 @@ body, html {
   <section class="group-pod pod-nexus" data-group="1" id="pod-1">
     <div class="pod-header">
       <div class="pod-badge">
-        <img alt="Emblema NEXUS" class="house-emblem-token" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBoxjJTGLBnmyZqo7bMIspcIGJs6L4V3UHu_I8phXTYvu4enr_szR_ToUO1cvGLkHUI_q5CIjGdIPfV4PPK9hagUEJ2hn-kUKRQ4NYOvIyiRbhhsQU0tV0isEnm_if_BV6uWnk0urRgzMEOz1kR6bJgq5YSfhr7nptixKfnhfK1Q4GABezVY98rGBU7_tM_kiaTghd8L_jXIRJdDDIgWsdUpPlihZn8L5rK-mNpAYLh-bDVKsPnQ">
+        <img alt="Emblema NEXUS" class="house-emblem-token" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBNPNRtU4ZQnSp2EhqDPPvywSy3PTZkk8D7cNpHvu-HrbyS8fK7fQGSHEnheR8Kjbt87_AxupmE-6J2kqD3uoqNNGffvRWUUqC40ku2r1uFMkM3hCfkJBfjdxd0foriXYZQuT9mfN74Ndtupy3XjCtd4ItnG15S8HQJjLZG2-nN69W1CK3MKFgEPO1mIZfcCX1OL1mJz_kSLWNPwfCR-U-Na-LjEKFkDevNMaof7cJO3_XjWOVUA">
         <div class="pod-info">
           <h3>NEXUS</h3>
           <span class="pod-motto">QUIENES DESCUBREN LO QUE UNE LAS PIEZAS</span>
@@ -726,10 +1137,11 @@ body, html {
 
   <!-- Center Sanctuary / Central Stage -->
   <section id="center-sanctuary">
-    <div class="seal-container">
+    <div class="seal-container" id="central-seal-trigger">
       <div class="runic-ring"></div>
       <div class="runic-ring inner"></div>
       <img alt="Emblema The Seekers" class="seal-medallion" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQLZVEAIh8Y6UoaAXxTfSvBmk2ntNo-uKi3bXfAODQdaJhljUIrKNJ00CPDa9GXtzN4CQxUQGwexZqyq8J0eQOjmFsv8XqhlJhH_OkftNwPxBCxqdD-hbRvuWVQ_FYKvsU_5XI5uePBtAKDCAvUmVsfrzdZuGy97N-X2EwviiOjI7AWDduPVYIiEj6nXPtmjJ08Pr2qYdVX-TjEw224j9tV8tNTrjiF-843a1w-O9u1G4udBrmMQ">
+      <div class="seal-prompt-pill">✦ INICIAR REVELACIÓN CINEMÁTICA ✦</div>
     </div>
     <h1 class="app-title">THE SEEKERS</h1>
     <div class="subtitle">Ceremonia de Destino y Afinidades</div>
@@ -784,7 +1196,7 @@ body, html {
       <!-- ATLAS -->
       <div class="group-config-card" style="border-top: 3px solid var(--c-atlas);">
         <div class="cfg-header">
-          <img alt="ATLAS" class="cfg-mini-emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGzApCyIBNzGEuGOR8kmBB-2T1_DU49VSuDWfTyk4aX4awt4etI3bbLC2s8V8ftxOWQClCMWecDwN0804XQGOZL54jTpkQ2PymNzbsstEu-QfRv2X1JTDPPm4bgtVixHqOOFhDUQ20agb5CiZr-1I45wtGzjCDt-Odb_hiz2PHXi692-hjrHLzUs5mWm_MwtwH4j0_BIb0s_4oBGqQMwTa0GV7S7UURRm1shMZlqZvyBdYGYxW9w">
+          <img alt="ATLAS" class="cfg-mini-emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMPyh1AaDl48wu0P5AdgnM44-xvAQgTdgjeioSnsCMiOWjwJ76iwF5En7zo2xT_IzO1NyQpDlzvESmx8G37Kuax5EupSEucl7STmyjRnkeITQj8iqTLUe1Mtu3KQi-SyHTzxj6uHNPFLhw4d-CvbWwnY12zMBOIZSL6TQwP3kEUt1ULvjD-ThtFDSloARfaHtRa2fgBEo6BbNVHmOZMv99HOKQ-3yZoFfDRKa1XNO9w071nN5_9Q">
           <div class="cfg-info">
             <div class="card-title" style="color: #a9cbff;">
               <span>ATLAS</span>
@@ -793,12 +1205,12 @@ body, html {
             <span class="card-motto">QUIENES BUSCAN COMPRENDER EL MUNDO</span>
           </div>
         </div>
-        <textarea id="cfg-ta-0" placeholder="Elena Navarro&#10;Mateo Castillo&#10;Sofía Benítez&#10;Hugo Méndez&#10;Valeria Romero&#10;Alejandro Vega"></textarea>
+        <textarea id="cfg-ta-0" placeholder="Elena Navarro&#10;Lucas Morales&#10;Sofía Benítez&#10;Mateo Castillo&#10;Valeria Romero&#10;Alejandro Vega"></textarea>
       </div>
       <!-- NEXUS -->
       <div class="group-config-card" style="border-top: 3px solid var(--c-nexus);">
         <div class="cfg-header">
-          <img alt="NEXUS" class="cfg-mini-emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBoxjJTGLBnmyZqo7bMIspcIGJs6L4V3UHu_I8phXTYvu4enr_szR_ToUO1cvGLkHUI_q5CIjGdIPfV4PPK9hagUEJ2hn-kUKRQ4NYOvIyiRbhhsQU0tV0isEnm_if_BV6uWnk0urRgzMEOz1kR6bJgq5YSfhr7nptixKfnhfK1Q4GABezVY98rGBU7_tM_kiaTghd8L_jXIRJdDDIgWsdUpPlihZn8L5rK-mNpAYLh-bDVKsPnQ">
+          <img alt="NEXUS" class="cfg-mini-emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBNPNRtU4ZQnSp2EhqDPPvywSy3PTZkk8D7cNpHvu-HrbyS8fK7fQGSHEnheR8Kjbt87_AxupmE-6J2kqD3uoqNNGffvRWUUqC40ku2r1uFMkM3hCfkJBfjdxd0foriXYZQuT9mfN74Ndtupy3XjCtd4ItnG15S8HQJjLZG2-nN69W1CK3MKFgEPO1mIZfcCX1OL1mJz_kSLWNPwfCR-U-Na-LjEKFkDevNMaof7cJO3_XjWOVUA">
           <div class="cfg-info">
             <div class="card-title" style="color: #9df3c0;">
               <span>NEXUS</span>
@@ -821,7 +1233,7 @@ body, html {
             <span class="card-motto">QUIENES SE ATREVEN A PARTIR</span>
           </div>
         </div>
-        <textarea id="cfg-ta-2" placeholder="Paula Santos&#10;Lucas Morales&#10;Alba Flores&#10;Adrián Lozano&#10;Martina Peña&#10;David Serrano"></textarea>
+        <textarea id="cfg-ta-2" placeholder="Paula Santos&#10;Hugo Méndez&#10;Alba Flores&#10;Adrián Lozano&#10;Martina Peña&#10;David Serrano"></textarea>
       </div>
       <!-- KAIROS -->
       <div class="group-config-card" style="border-top: 3px solid var(--c-kairos);">
@@ -845,11 +1257,114 @@ body, html {
   </div>
 </div>
 
+<!-- Ceremonial Fullscreen Revelation Viewer -->
+<div id="revelation-viewer">
+  <div class="rev-header-bar">
+    <div class="rev-step-tracker" id="rev-step-dots">
+      <div class="rev-step-dot active"></div>
+      <div class="rev-step-dot"></div>
+      <div class="rev-step-dot"></div>
+      <div class="rev-step-dot"></div>
+      <div class="rev-step-dot"></div>
+    </div>
+    <button class="rev-close-btn" id="rev-close-btn" title="Cerrar revelación">✕</button>
+  </div>
+
+  <div id="rev-content-stage">
+    <!-- ATLAS Slide -->
+    <div class="house-slide active" data-slide="0" style="--slide-accent: var(--c-atlas);">
+      <div class="house-slide-visual">
+        <div class="house-slide-visual-glow" style="background: var(--c-atlas);"></div>
+        <img alt="ATLAS Emblem" class="house-slide-emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMPyh1AaDl48wu0P5AdgnM44-xvAQgTdgjeioSnsCMiOWjwJ76iwF5En7zo2xT_IzO1NyQpDlzvESmx8G37Kuax5EupSEucl7STmyjRnkeITQj8iqTLUe1Mtu3KQi-SyHTzxj6uHNPFLhw4d-CvbWwnY12zMBOIZSL6TQwP3kEUt1ULvjD-ThtFDSloARfaHtRa2fgBEo6BbNVHmOZMv99HOKQ-3yZoFfDRKa1XNO9w071nN5_9Q">
+        <h2 class="house-slide-title" style="color: #a9cbff; text-shadow: 0 0 25px var(--c-atlas-glow);">ATLAS</h2>
+        <p class="house-slide-motto">QUIENES BUSCAN COMPRENDER EL MUNDO</p>
+      </div>
+      <div class="house-slide-roster-box">
+        <div class="house-roster-heading">
+          <h4>INTEGRANTES DEL GRUPO</h4>
+          <span>6 / 6 Miembros</span>
+        </div>
+        <div class="house-roster-grid" id="rev-grid-0"></div>
+      </div>
+    </div>
+
+    <!-- NEXUS Slide -->
+    <div class="house-slide" data-slide="1" style="--slide-accent: var(--c-nexus);">
+      <div class="house-slide-visual">
+        <div class="house-slide-visual-glow" style="background: var(--c-nexus);"></div>
+        <img alt="NEXUS Emblem" class="house-slide-emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBNPNRtU4ZQnSp2EhqDPPvywSy3PTZkk8D7cNpHvu-HrbyS8fK7fQGSHEnheR8Kjbt87_AxupmE-6J2kqD3uoqNNGffvRWUUqC40ku2r1uFMkM3hCfkJBfjdxd0foriXYZQuT9mfN74Ndtupy3XjCtd4ItnG15S8HQJjLZG2-nN69W1CK3MKFgEPO1mIZfcCX1OL1mJz_kSLWNPwfCR-U-Na-LjEKFkDevNMaof7cJO3_XjWOVUA">
+        <h2 class="house-slide-title" style="color: #9df3c0; text-shadow: 0 0 25px var(--c-nexus-glow);">NEXUS</h2>
+        <p class="house-slide-motto">QUIENES DESCUBREN LO QUE UNE LAS PIEZAS</p>
+      </div>
+      <div class="house-slide-roster-box">
+        <div class="house-roster-heading">
+          <h4>INTEGRANTES DEL GRUPO</h4>
+          <span>6 / 6 Miembros</span>
+        </div>
+        <div class="house-roster-grid" id="rev-grid-1"></div>
+      </div>
+    </div>
+
+    <!-- ARGOS Slide -->
+    <div class="house-slide" data-slide="2" style="--slide-accent: var(--c-argos);">
+      <div class="house-slide-visual">
+        <div class="house-slide-visual-glow" style="background: var(--c-argos);"></div>
+        <img alt="ARGOS Emblem" class="house-slide-emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3VI0W4SNilfKP8B4xiv1uWU9e9-_zsoSLjPA9meYRmsrnccmowi9ROcjEqNqTdXMdrHg90i7evBYZOEUTv77PL8qw38fjvgRHo4HtOZ8YZV-Jjb7FF-PY8fjinwlZTqL68a4P19D8Q60JlSdtdMuEFiFomEEoggwht0lnHnkrOWMT-xdJDJs-xfO8DE2Ew1IZ_QA1MW6uWRzaP0H0uWA8AgbuOm7tBPtYjF2IUsGC5ZPBu80YQQ">
+        <h2 class="house-slide-title" style="color: #8eeeff; text-shadow: 0 0 25px var(--c-argos-glow);">ARGOS</h2>
+        <p class="house-slide-motto">QUIENES SE ATREVEN A PARTIR</p>
+      </div>
+      <div class="house-slide-roster-box">
+        <div class="house-roster-heading">
+          <h4>INTEGRANTES DEL GRUPO</h4>
+          <span>6 / 6 Miembros</span>
+        </div>
+        <div class="house-roster-grid" id="rev-grid-2"></div>
+      </div>
+    </div>
+
+    <!-- KAIROS Slide -->
+    <div class="house-slide" data-slide="3" style="--slide-accent: var(--c-kairos);">
+      <div class="house-slide-visual">
+        <div class="house-slide-visual-glow" style="background: var(--c-kairos);"></div>
+        <img alt="KAIROS Emblem" class="house-slide-emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsUUAzhAwFN79GVkYVVsmDLsjnRiNG7SgngHN1vtC7QR3jXnV0qK1M1PWyt8uWP1M89Qnqr60_l5PMQ9Clc7ucPk6BlfG5o3kLYj21kujWt1-U0FoN3fj2bWONgq2-saBwpR02I6IHFsRFhLB1e52PDrBbY7oRCWeAwxvi8PXUtHzHLH1xCblhBEKIBIIRHG3UgpLhiyD_IXGSATIlDfRVPNOXyuwV8ApppR2OkxR6cQjaKdYXgg">
+        <h2 class="house-slide-title" style="color: #ffb88a; text-shadow: 0 0 25px var(--c-kairos-glow);">KAIROS</h2>
+        <p class="house-slide-motto">QUIENES SABEN RECONOCER EL MOMENTO</p>
+      </div>
+      <div class="house-slide-roster-box">
+        <div class="house-roster-heading">
+          <h4>INTEGRANTES DEL GRUPO</h4>
+          <span>6 / 6 Miembros</span>
+        </div>
+        <div class="house-roster-grid" id="rev-grid-3"></div>
+      </div>
+    </div>
+
+    <!-- Final Chest / Victory Slide -->
+    <div class="chest-slide" data-slide="4">
+      <div class="chest-container">
+        <img alt="Cofre de los Secretos de Eudoro" class="chest-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3FkL9B8vBms3Z9o-G2rVb_T-yN5mH1n0-j6Cq2wF1DqK8jF5b8W8Q3mY0G5n-9xP1xR-vF_x_t7Y8a7">
+      </div>
+      <h2 class="chest-quote">¡LA CEREMONIA HA CONCLUIDO!</h2>
+      <p class="chest-sub">LOS 4 GRUPOS ESTÁN LISTOS PARA LA BÚSQUEDA DEL ÁURYN</p>
+      <div class="chest-actions">
+        <button class="btn btn-primary" id="btn-finish-ceremony" style="padding: 12px 28px; font-size: 15px;">Volver al Mapa General</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="rev-nav-bar">
+    <button class="rev-next-arrow-btn" id="rev-next-btn">
+      <span>Siguiente Casa</span>
+      <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"></path></svg>
+    </button>
+  </div>
+</div>
+
 <script>
 const GROUPS = [
-  { id: 0, name: 'ATLAS', motto: 'QUIENES BUSCAN COMPRENDER EL MUNDO', color: 'var(--c-atlas)', defaultStudents: ['Elena Navarro', 'Mateo Castillo', 'Sofía Benítez', 'Hugo Méndez', 'Valeria Romero', 'Alejandro Vega'] },
+  { id: 0, name: 'ATLAS', motto: 'QUIENES BUSCAN COMPRENDER EL MUNDO', color: 'var(--c-atlas)', defaultStudents: ['Elena Navarro', 'Lucas Morales', 'Sofía Benítez', 'Mateo Castillo', 'Valeria Romero', 'Alejandro Vega'] },
   { id: 1, name: 'NEXUS', motto: 'QUIENES DESCUBREN LO QUE UNE LAS PIEZAS', color: 'var(--c-nexus)', defaultStudents: ['Claudia Ortiz', 'Bruno Delgado', 'Daniela Cruz', 'Iker Carrasco', 'Jimena Domínguez', 'Marcos Rubio'] },
-  { id: 2, name: 'ARGOS', motto: 'QUIENES SE ATREVEN A PARTIR', color: 'var(--c-argos)', defaultStudents: ['Paula Santos', 'Lucas Morales', 'Alba Flores', 'Adrián Lozano', 'Martina Peña', 'David Serrano'] },
+  { id: 2, name: 'ARGOS', motto: 'QUIENES SE ATREVEN A PARTIR', color: 'var(--c-argos)', defaultStudents: ['Paula Santos', 'Hugo Méndez', 'Alba Flores', 'Adrián Lozano', 'Martina Peña', 'David Serrano'] },
   { id: 3, name: 'KAIROS', motto: 'QUIENES SABEN RECONOCER EL MOMENTO', color: 'var(--c-kairos)', defaultStudents: ['Sara Gil', 'Javier Ramos', 'Carmen Vidal', 'Álvaro Cabrera', 'Lucía Guerrero', 'Gonzalo Marín'] }
 ];
 
@@ -858,6 +1373,7 @@ let unassignedPool = [];
 let assignedRoster = { 0: [], 1: [], 2: [], 3: [] };
 let autoInterval = null;
 let animFrameId = null;
+let currentRevSlide = 0;
 
 // Canvas Background Stars
 const canvas = document.getElementById('canvas-stars');
@@ -919,13 +1435,13 @@ function initApp() {
     });
   });
 
-  // Shuffle floating unassigned pool sequence for revelation
   unassignedPool.sort(() => Math.random() - 0.5);
 
   renderPods();
   renderFloatingOrbs();
   updateStats();
   document.getElementById('completion-banner').classList.remove('show');
+  document.getElementById('central-seal-trigger').classList.remove('ceremony-complete');
 }
 
 function renderPods() {
@@ -1008,10 +1524,15 @@ function updateStats() {
   document.getElementById('count-total').textContent = total;
 }
 
+function triggerCompletionState() {
+  document.getElementById('completion-banner').classList.add('show');
+  document.getElementById('central-seal-trigger').classList.add('ceremony-complete');
+  stopAuto();
+}
+
 function assignNextStudent() {
   if (unassignedPool.length === 0) {
-    document.getElementById('completion-banner').classList.add('show');
-    stopAuto();
+    triggerCompletionState();
     return;
   }
 
@@ -1022,10 +1543,8 @@ function assignNextStudent() {
   const group = GROUPS[student.groupId];
   const podEl = document.getElementById(`pod-${student.groupId}`);
 
-  // Highlight target group pod
   podEl.classList.add('active-target');
   
-  // Callout Announcer
   const announcer = document.getElementById('callout-announcer');
   announcer.textContent = `⚡ ¡${student.name} ha sido asignado a ${group.name}!`;
   announcer.classList.add('active');
@@ -1034,7 +1553,6 @@ function assignNextStudent() {
     orb.classList.add('flying');
     orb.style.setProperty('--orb-glow', group.color);
     
-    // Find target slot coordinates
     const targetSlotIdx = assignedRoster[student.groupId].length;
     const slotEl = document.getElementById(`slot-${student.groupId}-${targetSlotIdx}`);
     const rect = slotEl ? slotEl.getBoundingClientRect() : podEl.getBoundingClientRect();
@@ -1051,8 +1569,7 @@ function assignNextStudent() {
       setTimeout(() => announcer.classList.remove('active'), 1200);
 
       if (unassignedPool.length === 0) {
-        document.getElementById('completion-banner').classList.add('show');
-        stopAuto();
+        triggerCompletionState();
       }
     }, 800);
   } else {
@@ -1061,8 +1578,7 @@ function assignNextStudent() {
     renderPods();
     podEl.classList.remove('active-target');
     if (unassignedPool.length === 0) {
-      document.getElementById('completion-banner').classList.add('show');
-      stopAuto();
+      triggerCompletionState();
     }
   }
 }
@@ -1120,6 +1636,80 @@ function saveConfig() {
   initApp();
 }
 
+/* =========================================================
+   CINEMATIC REVELATION VIEWER LOGIC
+========================================================= */
+const revViewer = document.getElementById('revelation-viewer');
+
+function populateRevelationViewer() {
+  GROUPS.forEach(g => {
+    const gridEl = document.getElementById(`rev-grid-${g.id}`);
+    gridEl.innerHTML = '';
+    
+    // Fill from assignedRoster or fallback to configured group students
+    const members = assignedRoster[g.id].length > 0 
+      ? assignedRoster[g.id].map(s => s.name)
+      : groupData[g.id].students;
+
+    members.forEach((name, idx) => {
+      const card = document.createElement('div');
+      card.className = 'house-member-card';
+      card.innerHTML = `<span class="house-member-num">${idx + 1}.</span><span class="house-member-name">${name}</span>`;
+      gridEl.appendChild(card);
+    });
+  });
+}
+
+function openRevelationViewer() {
+  populateRevelationViewer();
+  currentRevSlide = 0;
+  updateRevSlideDisplay();
+  revViewer.classList.add('active');
+}
+
+function closeRevelationViewer() {
+  revViewer.classList.remove('active');
+}
+
+function updateRevSlideDisplay() {
+  const slides = document.querySelectorAll('.house-slide, .chest-slide');
+  const dots = document.querySelectorAll('.rev-step-dot');
+  const nextBtn = document.getElementById('rev-next-btn');
+
+  slides.forEach((slide, idx) => {
+    if (idx === currentRevSlide) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+    }
+  });
+
+  dots.forEach((dot, idx) => {
+    if (idx === currentRevSlide) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+
+  if (currentRevSlide < 3) {
+    nextBtn.style.display = 'inline-flex';
+    nextBtn.querySelector('span').textContent = `Ir a ${GROUPS[currentRevSlide + 1].name}`;
+  } else if (currentRevSlide === 3) {
+    nextBtn.style.display = 'inline-flex';
+    nextBtn.querySelector('span').textContent = 'Concluir Ceremonia';
+  } else {
+    nextBtn.style.display = 'none';
+  }
+}
+
+function nextRevSlide() {
+  if (currentRevSlide < 4) {
+    currentRevSlide++;
+    updateRevSlideDisplay();
+  }
+}
+
 // Event Listeners
 document.getElementById('btn-next').addEventListener('click', assignNextStudent);
 document.getElementById('btn-auto').addEventListener('click', toggleAuto);
@@ -1127,6 +1717,25 @@ document.getElementById('btn-reset').addEventListener('click', initApp);
 document.getElementById('btn-config').addEventListener('click', openConfigModal);
 document.getElementById('btn-close-modal').addEventListener('click', closeConfigModal);
 document.getElementById('btn-save-config').addEventListener('click', saveConfig);
+
+// Central Seal Click Event
+document.getElementById('central-seal-trigger').addEventListener('click', openRevelationViewer);
+
+// Viewer Controls
+document.getElementById('rev-close-btn').addEventListener('click', closeRevelationViewer);
+document.getElementById('rev-next-btn').addEventListener('click', nextRevSlide);
+document.getElementById('btn-finish-ceremony').addEventListener('click', closeRevelationViewer);
+
+// Keyboard Navigation for Viewer
+window.addEventListener('keydown', (e) => {
+  if (revViewer.classList.contains('active')) {
+    if (e.key === 'ArrowRight' || e.key === 'Space') {
+      nextRevSlide();
+    } else if (e.key === 'Escape') {
+      closeRevelationViewer();
+    }
+  }
+});
 
 // Initialize
 initApp();
